@@ -67,15 +67,12 @@ cnpjInvalido:
 	# Volta para o início do loop para uma nova tentativa
 	j loopTentativas
 
-#=============================================================================
-# SUB-ROTINA: calculaPrimeiroDigito
-# Descrição: Calcula o primeiro dígito verificador e o compara com o informado.
-# Retorno: Salva 1 em $v0 se for válido, 0 se for inválido.
-#=============================================================================
+# Sub-rotina que alcula o primeiro dígito verificador e o compara com o informado.
+# "Retorna" 1 se for válido e 0 se for inválido.
 calculaPrimeiroDigito:
 	# Inicia registradores para o cálculo
 	la $t0, vetorCNPJ       # $t0: endereço base do CNPJ
-	li $t6, 5               # $t6: INICIA o peso em 5
+	li $t6, 5               # $t6: inicia o peso em 5
 	li $t2, 0               # $t2: soma dos produtos (inicia com 0)
 	li $t3, 0               # $t3: contador do loop (de 0 a 11)
 	li $t4, 12              # $t4: limite do loop
@@ -93,7 +90,7 @@ loopSoma1:
 	# Acumula o resultado na soma total
 	add $t2, $t2, $t7
 	
-	# Lógica para atualizar o peso para a Próxima iteração
+	# Lógica para atualizar o peso para a próxima iteração
 	subi $t6, $t6, 1        # Decrementa o peso
 	bne $t6, 1, peso1_ok    # Se o peso não chegou em 1, a lógica de atualização termina.
 	li $t6, 9               # Se o peso chegou em 1 (agora é 1), reseta para 9.
@@ -141,12 +138,8 @@ falhaDV1:
 	li $v0, 0
 	jr $ra                  # Retorna para o ponto de onde foi chamado (jal)
 
-#=============================================================================
-# SUB-ROTINA: calculaSegundoDigito
-# Descrição: Calcula o segundo dígito verificador e o compara com o informado.
-# Retorno: Salva 1 em $v0 se for válido, 0 se for inválido.
-# Lógica é idêntica à do primeiro, mas usa 13 dígitos e o segundo vetor de pesos.
-#=============================================================================
+# Sub-rotina que calcula o segundo dígito verificador e o compara com o informado.
+# A lógica é idêntica à da primeira, mas usa 13 dígitos e considera o peso adicional.
 calculaSegundoDigito:
 	# Inicia registradores para o cálculo
 	la $t0, vetorCNPJ       # $t0: endereço base do CNPJ
@@ -166,7 +159,7 @@ loopSoma2:
 	mul $t7, $t5, $t6
 	add $t2, $t2, $t7
 
-	# Lógica para atualizar o peso para a Próxima iteração
+	# Lógica para atualizar o peso para a próxima iteração
 	subi $t6, $t6, 1        # Decrementa o peso
 	bne $t6, 1, peso2_ok    # Se o peso não chegou em 1, está ok.
 	li $t6, 9               # Se chegou em 1, reseta para 9.
@@ -214,9 +207,7 @@ falhaDV2:
 	li $v0, 0
 	jr $ra
 
-#=============================================================================
-# Seções Finais do Programa
-#=============================================================================
+# Desfecho do Programa
 sucesso:
 	# Mensagem de sucesso em caso de CNPJ válido
 	li $v0, 4
