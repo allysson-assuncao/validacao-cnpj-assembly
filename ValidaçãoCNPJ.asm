@@ -67,7 +67,7 @@ cnpjInvalido:
 	# Volta para o início do loop para uma nova tentativa
 	j loopTentativas
 
-# Sub-rotina que alcula o primeiro dígito verificador e o compara com o informado.
+# Sub-rotina que calcula o primeiro dígito verificador e o compara com o informado.
 # "Retorna" 1 se for válido e 0 se for inválido.
 calculaPrimeiroDigito:
 	# Inicia registradores para o cálculo
